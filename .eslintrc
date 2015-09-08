@@ -1,0 +1,8 @@
+env:
+  node: true
+  mocha: true
+
+rules:
+  quotes: [1, "single"]
+  strict: [2, "global"]
+  no-underscore-dangle: 0
