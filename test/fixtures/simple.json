@@ -1,0 +1,19 @@
+{
+  "string": "this is a string",
+  "int": 1234,
+  "float": 123.456,
+  "boolean_true": true,
+  "boolean_false": false,
+  "null": null,
+  "datetime": "2015-09-08T01:55:28+00:00",
+  "timestamp": 1441735002,
+  "list": [
+    "item1",
+    "item2",
+    "item3"
+  ],
+  "object": {
+    "string": "this is another string",
+    "int": 5678
+  }
+}
