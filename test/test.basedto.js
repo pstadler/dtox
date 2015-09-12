@@ -22,16 +22,23 @@ describe('BaseDTO', function() {
   });
 
   it('#inherit inherits mappings', function() {
-    expect(Object.keys(TestDTO.inherit().__mapping)).to.deep.equal(['string', 'withDefault', 'mappedValue']);
-    expect(TestDTO.inherit({}).__mapping).to.deep.equal({});
+    expect(Object.keys(TestDTO.inherit().__MAPPING__)).to.deep.equal(['string', 'withDefault', 'mappedValue']);
+    expect(TestDTO.inherit({}).__MAPPING__).to.deep.equal({});
   });
 
   it('#field registers fields', function() {
     var SomeDTO = BaseDTO.inherit();
-    SomeDTO.field('string', fields.string());
+    SomeDTO.field('prop', fields.string());
 
-    var instance = new SomeDTO({ string: 'foobar' });
-    expect(instance.string).to.equal('foobar');
+    var instance = new SomeDTO({ prop: 'foobar' });
+    expect(instance.prop).to.equal('foobar');
+
+    var AnotherDTO = TestDTO.inherit();
+    AnotherDTO.field('prop', fields.string());
+
+    instance = new AnotherDTO({ prop: 'foo', string: 'bar' });
+    expect(instance.prop).to.equal('foo');
+    expect(instance.string).to.equal('bar');
   });
 
   it('#field throws if argument is missing', function() {
@@ -40,7 +47,7 @@ describe('BaseDTO', function() {
   });
 
   it('throws if mapping is missing', function() {
-    expect(function() { new BaseDTO.inherit()(); }).to.throw(errors.MappingError);
+    expect(function() { new (BaseDTO.inherit())(); }).to.throw(errors.MappingError);
   });
 
   it('takes valid data', function() {
@@ -75,6 +82,11 @@ describe('BaseDTO', function() {
 
   it('throws on invalid data', function() {
     expect(function() { new TestDTO([]); }).to.throw(errors.MissingPropertyError);
+  });
+
+  it('stores raw data', function() {
+    var instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
+    expect(Object.keys(instance.__RAW__)).to.have.length(2);
   });
 
 });
