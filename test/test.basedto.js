@@ -1,5 +1,7 @@
 'use strict';
 
+/*eslint-disable no-unused-expressions, no-new */
+
 var expect = require('chai').expect;
 
 var BaseDTO = require('../lib/dto').BaseDTO

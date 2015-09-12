@@ -3,6 +3,8 @@ env:
   mocha: true
 
 rules:
-  quotes: [1, "single"]
+  quotes: [2, "single"]
   strict: [2, "global"]
+  no-unused-vars: 2
+  semi: 2
   no-underscore-dangle: 0
