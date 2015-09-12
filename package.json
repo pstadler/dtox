@@ -1,7 +1,7 @@
 {
-  "name": "dto",
-  "version": "1.0.0",
-  "description": "Data Transfer Objects for JavaScript",
+  "name": "dtox",
+  "version": "0.0.1",
+  "description": "Extensible data transfer object library",
   "main": "index.js",
   "scripts": {
     "test": "./node_modules/.bin/mocha --reporter spec"
@@ -11,18 +11,19 @@
     "data",
     "transfer",
     "objects",
-    "mapping"
+    "mapping",
+    "mapper"
   ],
   "author": "Patrick Stadler <patrick.stadler@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pstadler/dto"
+    "url": "https://github.com/pstadler/dtox"
   },
   "bugs": {
-    "url": "https://github.com/pstadler/dto/issues"
+    "url": "https://github.com/pstadler/dtox/issues"
   },
-  "homepage": "https://github.com/pstadler/dto#readme",
+  "homepage": "https://github.com/pstadler/dtox#readme",
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^3.2.0",
