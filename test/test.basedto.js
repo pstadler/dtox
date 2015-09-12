@@ -46,6 +46,10 @@ describe('BaseDTO', function() {
     expect(function() { SomeDTO.field('name'); }).to.throw(errors.InvalidArgumentError);
   });
 
+  it('throws if constructor is called without "new"', function() {
+    expect(function() { BaseDTO.inherit()(); }).to.throw(errors.BaseError);
+  });
+
   it('throws if mapping is missing', function() {
     expect(function() { new (BaseDTO.inherit())(); }).to.throw(errors.MappingError);
   });
@@ -90,23 +94,3 @@ describe('BaseDTO', function() {
   });
 
 });
-
-// {
-//   "string": "this is a string",
-//   "int": 1234,
-//   "float": 123.456,
-//   "boolean_true": true,
-//   "boolean_false": false,
-//   "null": null,
-//   "datetime": "2015-09-08T01:55:28+00:00",
-//   "timestamp": 1441735002,
-//   "list": [
-//     "item1",
-//     "item2",
-//     "item3"
-//   ],
-//   "object": {
-//     "string": "this is another string",
-//     "int": 5678
-//   }
-// }
