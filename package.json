@@ -4,7 +4,8 @@
   "description": "Extensible data transfer object library",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/mocha --reporter spec",
+    "sauce": "./node_modules/.bin/mochify --wd"
   },
   "keywords": [
     "dto",
@@ -27,8 +28,9 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^3.2.0",
+    "eslint": "^1.5.1",
     "mocha": "^2.3.2",
-    "mocha-eslint": "^1.0.0",
+    "mochify": "^2.13.0",
     "pre-commit": "^1.1.1"
   },
   "dependencies": {
