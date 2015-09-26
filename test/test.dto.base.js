@@ -8,8 +8,6 @@ var BaseDTO = require('../lib/dto').BaseDTO
   , fields = require('../lib/fields')
   , errors = require('../lib/errors');
 
-//var fixture = require('./fixtures/simple');
-
 describe('BaseDTO', function() {
   var MAPPING = {
     string: fields.string(),
