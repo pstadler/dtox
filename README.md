@@ -1,4 +1,4 @@
-# dtox [![Build Status](https://magnum.travis-ci.com/pstadler/dtox.svg?token=MphUcEqPQLyxoszv8kp4&branch=master)](https://magnum.travis-ci.com/pstadler/dtox)
+# dtox [![Build Status](https://travis-ci.org/pstadler/dtox.svg?branch=master)](https://travis-ci.org/pstadler/dtox)
 
 Lightweight, extensible JavaScript library for defining data transfer objects (DTOs).
 
