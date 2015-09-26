@@ -59,6 +59,11 @@ describe('BaseDTO', function() {
     expect(instance.string).to.equal('foobar');
   });
 
+  it('handles `null` values', function() {
+    var instance = new TestDTO({ string: null });
+    expect(instance.string).to.equal(null);
+  });
+
   it('ignores superfluous data', function() {
     var instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
     expect(instance).to.not.have.property('string2');

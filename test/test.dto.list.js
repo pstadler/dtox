@@ -51,7 +51,6 @@ describe('BaseListDTO', function() {
     expect(instance.list[0].string).to.equal('test');
     expect(instance.list[1].string).to.equal('test2');
     expect(instance.list[2].string).to.equal('test3');
-
   });
 
   it('handles empty list', function() {
