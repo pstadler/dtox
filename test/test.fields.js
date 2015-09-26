@@ -12,7 +12,7 @@ var BaseDTO = require('../lib/dto').BaseDTO
 describe('fields', function() {
   it('contain correct properties', function() {
     utils.eachField(function(field) {
-      expect(typeof field().fn).to.equal('function');
+      expect(field().fn).to.be.a('function');
       expect(field().options).to.deep.equal({});
     });
   });
@@ -69,7 +69,7 @@ describe('fields', function() {
         var testVal = utils.valueForType(type);
 
         if(['string', 'generic'].indexOf(type) !== -1) {
-          expect(typeof fields.string().fn(testVal)).to.equal('string');
+          expect(fields.string().fn(testVal)).to.be.a('string');
           return;
         }
 
@@ -84,7 +84,7 @@ describe('fields', function() {
         var testVal = utils.valueForType(type);
 
         if(['boolean'].indexOf(type) !== -1) {
-          expect(typeof fields.boolean().fn(testVal)).to.equal('boolean');
+          expect(fields.boolean().fn(testVal)).to.be.a('boolean');
           return;
         }
 
@@ -99,7 +99,7 @@ describe('fields', function() {
         var testVal = utils.valueForType(type);
 
         if(['number'].indexOf(type) !== -1) {
-          expect(typeof fields.number().fn(testVal)).to.equal('number');
+          expect(fields.number().fn(testVal)).to.be.a('number');
           return;
         }
 
@@ -114,7 +114,7 @@ describe('fields', function() {
         var testVal = utils.valueForType(type);
 
         if(['date', 'number'].indexOf(type) !== -1) {
-          expect(fields.date().fn(testVal)instanceof Date).to.be.true;
+          expect(fields.date().fn(testVal)).to.be.an.instanceof(Date);
           return;
         }
 
@@ -129,7 +129,7 @@ describe('fields', function() {
         var testVal = utils.valueForType(type);
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
-          expect(fields.list().fn(testVal) instanceof Array).to.be.true;
+          expect(fields.list().fn(testVal)).to.be.an.instanceof(Array);
           return;
         }
 
@@ -145,7 +145,7 @@ describe('fields', function() {
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
           var field = fields.listWithDTO(BaseDTO.inherit({ fieldInMapping: fields.generic() }));
-          expect(field.fn(testVal) instanceof Array).to.be.true;
+          expect(field.fn(testVal)).to.be.an.instanceof(Array);
           return;
         }
 
@@ -162,7 +162,7 @@ describe('fields', function() {
         var field = fields.objectWithDTO(TestDTO);
 
         if(['objectWithDTO'].indexOf(type) !== -1) {
-          expect(field.fn(testVal) instanceof TestDTO).to.be.true;
+          expect(field.fn(testVal)).to.be.an.instanceof(TestDTO);
           return;
         }
 

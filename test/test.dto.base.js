@@ -17,8 +17,8 @@ describe('BaseDTO', function() {
   var TestDTO = BaseDTO.inherit(MAPPING);
 
   it('#inherit inherits from parent classes', function() {
-    expect(TestDTO.prototype instanceof BaseDTO).to.be.true;
-    expect(TestDTO.inherit().prototype instanceof TestDTO).to.be.true;
+    expect(TestDTO.prototype).to.be.an.instanceof(BaseDTO);
+    expect(TestDTO.inherit().prototype).to.be.an.instanceof(TestDTO);
   });
 
   it('#inherit inherits mappings', function() {
