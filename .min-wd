@@ -3,7 +3,14 @@
   "browsers": [
     {
       "name": "internet explorer",
+      "version": "9",
+      "url": "https://raw.githubusercontent.com/pstadler/dtox/master/test/browser/ie9.html"
+    }, {
+      "name": "internet explorer",
       "version": "10"
+    }, {
+      "name": "internet explorer",
+      "version": "11"
     }, {
       "name": "chrome"
     }, {
