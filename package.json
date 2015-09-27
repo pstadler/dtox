@@ -4,8 +4,11 @@
   "description": "Extensible data transfer object library",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/eslint . && ./node_modules/.bin/mocha --reporter spec",
-    "sauce": "./node_modules/.bin/mochify --wd"
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "npm run lint && ./node_modules/.bin/mocha --reporter spec",
+    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -R spec",
+    "sauce": "./node_modules/.bin/mochify --wd",
+    "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
   "keywords": [
     "dto",
@@ -28,7 +31,9 @@
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^3.2.0",
+    "coveralls": "^2.11.4",
     "eslint": "^1.5.1",
+    "istanbul": "^0.3.21",
     "mocha": "^2.3.2",
     "mochify": "^2.13.0",
     "pre-commit": "^1.1.1"
