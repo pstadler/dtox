@@ -125,41 +125,49 @@ describe('fields', function() {
 
   describe('#list', function() {
     it('takes only values of type list', function() {
+      var field = fields.list();
+
       utils.fieldTypes.forEach(function(type) {
         var testVal = utils.valueForType(type);
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
-          expect(fields.list().fn(testVal)).to.be.an.instanceof(Array);
+          expect(field.fn(testVal)).to.be.an.instanceof(Array);
           return;
         }
 
-        expect(function() { fields.list().fn(testVal); }).to.throw(errors.InvalidPropertyError);
+        expect(function() { field.fn(testVal); }).to.throw(errors.InvalidPropertyError);
       });
     });
   });
 
   describe('#listWithDTO', function() {
     it('takes only values of type list', function() {
+      var field = fields.listWithDTO(BaseDTO.inherit({ fieldInMapping: fields.generic() }));
+
       utils.fieldTypes.forEach(function(type) {
         var testVal = utils.valueForType(type);
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
-          var field = fields.listWithDTO(BaseDTO.inherit({ fieldInMapping: fields.generic() }));
           expect(field.fn(testVal)).to.be.an.instanceof(Array);
           return;
         }
 
-        expect(function() { fields.list().fn(testVal); }).to.throw(errors.InvalidPropertyError);
+        expect(function() { field.fn(testVal); }).to.throw(errors.InvalidPropertyError);
       });
+    });
+
+    it('throws when DTO argument is missing', function() {
+      expect(function() { fields.listWithDTO(); }).to.throw(errors.InvalidArgumentError);
     });
   });
 
   describe('#objectWithDTO', function() {
     it('takes only valid objects', function() {
+      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
+      var field = fields.objectWithDTO(TestDTO);
+
       utils.fieldTypes.forEach(function(type) {
         var testVal = utils.valueForType(type);
-        var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
-        var field = fields.objectWithDTO(TestDTO);
 
         if(['objectWithDTO'].indexOf(type) !== -1) {
           expect(field.fn(testVal)).to.be.an.instanceof(TestDTO);
@@ -168,6 +176,16 @@ describe('fields', function() {
 
         expect(function() { field.fn(testVal); }).to.throw(errors.MissingPropertyError);
       });
+    });
+
+    it('throws when DTO argument is missing', function() {
+      expect(function() { fields.objectWithDTO(); }).to.throw(errors.InvalidArgumentError);
+    });
+
+    it('correctly handles missing data when default is `null`', function() {
+      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
+      var field = fields.objectWithDTO(TestDTO, { default: null });
+      expect(field.fn()).to.be.null;
     });
   });
 });
