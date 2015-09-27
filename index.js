@@ -1,3 +1,8 @@
 'use strict';
 
-module.exports = require('./lib/dto');
+var lib = require('./lib/dto');
+
+lib.fields = require('./lib/fields');
+lib.errors = require('./lib/errors');
+
+module.exports = lib;

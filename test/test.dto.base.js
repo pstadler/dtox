@@ -4,9 +4,10 @@
 
 var expect = require('chai').expect;
 
-var BaseDTO = require('../lib/dto').BaseDTO
-  , fields = require('../lib/fields')
-  , errors = require('../lib/errors');
+var dtox = require('../')
+  , BaseDTO = dtox.BaseDTO
+  , fields = dtox.fields
+  , errors = dtox.errors;
 
 describe('BaseDTO', function() {
   var MAPPING = {
