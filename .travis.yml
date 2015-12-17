@@ -4,7 +4,8 @@ env:
   - secure: i+a2mN2VhA1aOjrVzzMYDFqI4pFjELXdLs3S2Mx1JAyYWVQ/YNTKx4PExxN4I7JSdOo/wUNFKvWAHmnlkG6yzqVW+pLVi/XvUUL3B7WMGMgl5LbVmt/4wsrElv2NjtErRMwyCxWbkzYoegIm4hLuoC6/D/Hst/yGPMfsgvxMdNEVj5cOCS7P8F9U6KAoQ5XRJH1pvfrSbAiQ4/ZV0SqBj50WQE/S+szlJgVAcl+2sn/TdegZi8N5HuvNvasrgFSHSkxNssaivQIDLEW81wOv8euRGyZxtysJFbxfriuNKdKipwoexY2+PMHRRMgNdQjYwNLpdRmSSBtzMxQc6MJbIkragNwY9RnM1JyJstcIubt0OaKqvHWCLx3n5xVqbvDhn+ispFG4/Bd58R7XhHyHuhfOrrea3KF7OBOJfGBMG8w5rgjCRMbnTUyFkKJW3h/UN6MjIWPH+Tl2QdJcDhDRKwzoZcNpGiGmydIubaz9BCNni5im+1Da0MEhSaXzjl1aw+SaQaC3Ls7HcbAjAhrpZ1wt2cos2sLJ/yk+AQ3dnOkplhgxfBsbW+l+km0gR105/R76qbmSc6/ByQnG/DSfD5TZkmR1Ig8PcQ9AX9YxKBdbvEO5WLBwySy+6TUmEzktJY7nxmkK10HKPu9Rx9jE6bmVnVXtVD+AIi15a4GM0co=
 language: node_js
 node_js:
-- stable
+- 4
+- 0.12
 script: npm test
 after_script: npm run coveralls
 #addons:
