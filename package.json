@@ -1,7 +1,7 @@
 {
   "name": "dtox",
-  "version": "0.0.1",
-  "description": "Extensible data transfer object library",
+  "version": "0.1.0",
+  "description": "Lightweight, extensible data transfer object library",
   "main": "index.js",
   "scripts": {
     "lint": "./node_modules/.bin/eslint .",
@@ -16,7 +16,10 @@
     "transfer",
     "objects",
     "mapping",
-    "mapper"
+    "mapper",
+    "node.js",
+    "server",
+    "browser"
   ],
   "author": "Patrick Stadler <patrick.stadler@gmail.com>",
   "license": "MIT",
