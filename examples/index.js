@@ -1,19 +1,6 @@
-# dtox [![Build Status](https://img.shields.io/travis/pstadler/dtox/master.svg?style=flat-square)](https://travis-ci.org/pstadler/dtox) [![Build Status](https://img.shields.io/coveralls/pstadler/dtox/master.svg?style=flat-square)](https://coveralls.io/github/pstadler/dtox?branch=master)
+'use strict';
 
-Lightweight, extensible data transfer object (DTO) library for Node.js and browser environments.
-
-Please note that this library is currently not running on Node.js 5.x due to compatibility issues with the new class inheritance model.
-
-## Install
-
-```bash
-$ npm install dtox --save
-```
-
-## Usage
-
-```js
-var dtox = require('dtox')
+var dtox = require('..')
   , fields = dtox.fields;
 
 // Define user mapping
@@ -58,9 +45,8 @@ var users = new UserListDTO([
   }
 ]);
 
-var userNames = users.map(function(user) {
-  return user.name;
+var userNames = users.map(function(u) {
+  return u.name;
 });
 
 console.log(userNames.join(', ')); // "john_doe, jane_doe"
-```
