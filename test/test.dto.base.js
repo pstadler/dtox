@@ -1,6 +1,6 @@
 'use strict';
 
-/*eslint-disable no-unused-expressions, no-new */
+/* eslint-disable no-unused-expressions, no-new */
 
 var expect = require('chai').expect;
 
@@ -23,7 +23,8 @@ describe('BaseDTO', function() {
   });
 
   it('#inherit inherits mappings', function() {
-    expect(Object.keys(TestDTO.inherit().__MAPPING__)).to.deep.equal(['string', 'withDefault', 'mappedValue']);
+    var mappingKeys = Object.keys(TestDTO.inherit().__MAPPING__);
+    expect(mappingKeys).to.deep.equal(['string', 'withDefault', 'mappedValue']);
     expect(TestDTO.inherit({}).__MAPPING__).to.deep.equal({});
   });
 

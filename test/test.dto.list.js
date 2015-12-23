@@ -1,6 +1,6 @@
 'use strict';
 
-/*eslint-disable no-unused-expressions, no-new */
+/* eslint-disable no-unused-expressions, no-new, new-cap */
 
 var expect = require('chai').expect;
 
