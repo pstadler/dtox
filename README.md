@@ -22,6 +22,9 @@ var USER_MAPPING = {
   name:        fields.string(),
   roles:       fields.list({ default: [], key: 'groups' }),
   validated:   fields.boolean({ default: false }),
+  computed:    fields.generic({ callback: function(data) {
+    return data.roles.length;
+  }}),
   dateCreated: fields.date()
 };
 
@@ -37,6 +40,8 @@ var user = new UserDTO({
 });
 
 console.log('Hello ' + user.name); // "Hello john_doe"
+
+console.log('You have ' + user.groups + ' groups assigned.'); // "You have 1 groups assigned"
 
 // Define a DTO which represents a list of users
 var UserListDTO = dtox.BaseListDTO.inherit(UserDTO);

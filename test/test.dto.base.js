@@ -13,7 +13,18 @@ describe('BaseDTO', function() {
   var MAPPING = {
     string: fields.string(),
     withDefault: fields.generic({ default: 'default value' }),
-    mappedValue: fields.generic({ default: null, key: 'keyOfMappedValue' })
+    mappedValue: fields.generic({ default: null, key: 'keyOfMappedValue' }),
+    callbackValue: fields.generic({
+      callback: function(data) {
+        return data.callbackValue + 'test';
+      }
+    }),
+    callbackValueUndefined: fields.generic({
+      default: 'foo',
+      callback: function() {
+        return undefined;
+      }
+    })
   };
   var TestDTO = BaseDTO.inherit(MAPPING);
 
@@ -24,7 +35,13 @@ describe('BaseDTO', function() {
 
   it('#inherit inherits mappings', function() {
     var mappingKeys = Object.keys(TestDTO.inherit().__MAPPING__);
-    expect(mappingKeys).to.deep.equal(['string', 'withDefault', 'mappedValue']);
+    expect(mappingKeys).to.deep.equal([
+      'string',
+      'withDefault',
+      'mappedValue',
+      'callbackValue',
+      'callbackValueUndefined'
+    ]);
     expect(TestDTO.inherit({}).__MAPPING__).to.deep.equal({});
   });
 
@@ -100,12 +117,24 @@ describe('BaseDTO', function() {
     expect(Object.keys(instance.__RAW__)).to.have.length(2);
   });
 
+  it('uses callback for init', function() {
+    var instance = new TestDTO({ string: 'test', callbackValue: 'cbValue' });
+    expect(instance.callbackValue).to.equal('cbValuetest');
+  });
+
+  it('uses default value if callback returns undefined', function() {
+    var instance = new TestDTO({ string: 'test' });
+    expect(instance.callbackValueUndefined).to.equal('foo');
+  });
+
   it('serialises correctly to JSON', function() {
-    var instance = new TestDTO({ string: 'foobar' });
+    var instance = new TestDTO({string: 'foobar', callbackValue: 'cbValue'});
     expect(JSON.parse(JSON.stringify(instance))).to.deep.equal({
       string: 'foobar',
       withDefault: 'default value',
-      mappedValue: null
+      mappedValue: null,
+      callbackValue: 'cbValuetest',
+      callbackValueUndefined: 'foo'
     });
   });
 });
