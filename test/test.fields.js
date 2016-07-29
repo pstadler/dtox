@@ -33,7 +33,7 @@ describe('fields', function() {
     });
   });
 
-  it('correctly store default values', function() {
+  it('correctly stores default values', function() {
     utils.eachField(function(field, type) {
       var defaultVal = utils.valueForType(type);
 
