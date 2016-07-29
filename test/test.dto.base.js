@@ -100,4 +100,12 @@ describe('BaseDTO', function() {
     expect(Object.keys(instance.__RAW__)).to.have.length(2);
   });
 
+  it('serialises correctly to JSON', function() {
+    var instance = new TestDTO({ string: 'foobar' });
+    expect(JSON.parse(JSON.stringify(instance))).to.deep.equal({
+      string: 'foobar',
+      withDefault: 'default value',
+      mappedValue: null
+    });
+  });
 });
