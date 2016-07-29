@@ -107,4 +107,19 @@ describe('BaseListDTO', function() {
     expect(instance.map(mapFn)).to.deep.equal([].map(mapFn));
   });
 
+  it('serialises correctly to JSON', function() {
+    var data = [
+      { string: 'test' },
+      { string: 'test2' },
+      { string: 'test3' }
+    ];
+
+    var instance = new TestListDTO(data);
+
+    expect(JSON.parse(JSON.stringify(instance))).to.deep.equal([
+      { string: 'test', withDefault: 'default value', mappedValue: null },
+      { string: 'test2', withDefault: 'default value', mappedValue: null },
+      { string: 'test3', withDefault: 'default value', mappedValue: null }
+    ]);
+  });
 });
