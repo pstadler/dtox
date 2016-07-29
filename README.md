@@ -2,7 +2,7 @@
 
 Lightweight, extensible data transfer object (DTO) library for Node.js and browser environments.
 
-Please note that this library is currently not running on Node.js 5.x due to compatibility issues with the new class inheritance model.
+Please note that this library is currently not running on Node.js >= 5.x due to compatibility issues with the new class inheritance model.
 
 ## Install
 
