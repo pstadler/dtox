@@ -22,8 +22,8 @@ var USER_MAPPING = {
   name:        fields.string(),
   validated:   fields.boolean({ default: false }),
   roles:       fields.list({ default: [], key: 'groups' }),
-  numGroups:   fields.generic({ callback: function(data) {
-    return data.groups.length;
+  hasRoles:    fields.generic({ callback: function(data) {
+    return data.groups.length > 0;
   }}),
   dateCreated: fields.date()
 };
@@ -40,8 +40,7 @@ var user = new UserDTO({
 });
 
 console.log('Hello ' + user.name); // "Hello john_doe"
-
-console.log('You have ' + user.numGroups + ' group(s) assigned.'); // "You have 1 group(s) assigned"
+console.log('User ' + user.hasRoles ? 'has roles' : 'has no roles'); // "User has roles"
 
 // Define a DTO which represents a list of users
 var UserListDTO = dtox.BaseListDTO.inherit(UserDTO);
