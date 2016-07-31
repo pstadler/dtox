@@ -20,10 +20,10 @@ var dtox = require('dtox')
 var USER_MAPPING = {
   id:          fields.number(),
   name:        fields.string(),
-  roles:       fields.list({ default: [], key: 'groups' }),
   validated:   fields.boolean({ default: false }),
-  computed:    fields.generic({ callback: function(data) {
-    return data.roles.length;
+  roles:       fields.list({ default: [], key: 'groups' }),
+  numGroups:   fields.generic({ callback: function(data) {
+    return data.groups.length;
   }}),
   dateCreated: fields.date()
 };
@@ -34,14 +34,14 @@ var UserDTO = dtox.BaseDTO.inherit(USER_MAPPING);
 var user = new UserDTO({
   id: 123,
   name: 'john_doe',
-  groups: ['administrator'],
   validated: true,
+  groups: ['administrator'],
   dateCreated: '1997-07-16T19:20:30Z'
 });
 
 console.log('Hello ' + user.name); // "Hello john_doe"
 
-console.log('You have ' + user.groups + ' groups assigned.'); // "You have 1 groups assigned"
+console.log('You have ' + user.numGroups + ' group(s) assigned.'); // "You have 1 group(s) assigned"
 
 // Define a DTO which represents a list of users
 var UserListDTO = dtox.BaseListDTO.inherit(UserDTO);
