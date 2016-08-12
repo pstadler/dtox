@@ -26,11 +26,14 @@ describe('BaseDTO', function() {
       }
     })
   };
-  var TestDTO = BaseDTO.inherit(MAPPING);
+  class TestDTO {
+    constructor(data) {
+      super(data, MAPPING);
+    }
+  }
 
   it('#inherit inherits from parent classes', function() {
     expect(TestDTO.prototype).to.be.an.instanceof(BaseDTO);
-    expect(TestDTO.inherit().prototype).to.be.an.instanceof(TestDTO);
   });
 
   it('#inherit inherits mappings', function() {
