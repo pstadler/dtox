@@ -142,7 +142,14 @@ describe('fields', function() {
 
   describe('#listWithDTO', function() {
     it('takes only values of type list', function() {
-      var field = fields.listWithDTO(BaseDTO.inherit({ fieldInMapping: fields.generic() }));
+      class fieldDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
+      var field = fields.listWithDTO(fieldDTO);
 
       utils.fieldTypes.forEach(function(type) {
         var testVal = utils.valueForType(type);
@@ -163,7 +170,13 @@ describe('fields', function() {
 
   describe('#objectWithDTO', function() {
     it('takes only valid objects', function() {
-      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
+      class TestDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
       var field = fields.objectWithDTO(TestDTO);
 
       utils.fieldTypes.forEach(function(type) {
@@ -183,7 +196,13 @@ describe('fields', function() {
     });
 
     it('correctly handles missing data when default is `null`', function() {
-      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
+      class TestDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
       var field = fields.objectWithDTO(TestDTO, { default: null });
       expect(field.fn()).to.be.null;
     });

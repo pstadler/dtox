@@ -23,21 +23,15 @@ describe('BaseListDTO', function() {
       super(data, TestDTO);
     }
   }
-  /*
-  it('#inherit inherits from parent classes', function() {
-    expect(BaseListDTO.prototype).to.be.an.instanceof(BaseDTO);
+
+  it('inherits from parent classes', function() {
     expect(TestListDTO.prototype).to.be.an.instanceof(BaseListDTO);
-    expect(TestListDTO.inherit().prototype).to.be.an.instanceof(TestListDTO);
   });
 
-  it('#inherit inherits DTO class from parent', function() {
-    expect(TestListDTO.inherit().__DTOClass__.prototype.constructor).to.equal(TestDTO);
+  it('throws if DTO class is missing', function() {
+    expect(function() { new BaseListDTO({}); }).to.throw(errors.InvalidArgumentError);
   });
 
-  it('#inherit throws if DTO class is missing', function() {
-    expect(function() { new (BaseListDTO.inherit())(); }).to.throw(errors.InvalidArgumentError);
-  });
-*/
   it('handles data correctly', function() {
     var data = [
       { string: 'test' },
