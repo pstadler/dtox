@@ -2,13 +2,9 @@
 
 /* eslint-disable no-unused-expressions, no-new, new-cap */
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var dtox = require('../')
-  , BaseDTO = dtox.BaseDTO
-  , BaseListDTO = dtox.BaseListDTO
-  , fields = dtox.fields
-  , errors = dtox.errors;
+const { BaseDTO, BaseListDTO, fields, errors } = require('../');
 
 describe('BaseListDTO', function() {
   var MAPPING = {
@@ -17,8 +13,16 @@ describe('BaseListDTO', function() {
     mappedValue: fields.generic({ default: null, key: 'keyOfMappedValue' })
   };
 
-  var TestDTO = BaseDTO.inherit(MAPPING)
-    , TestListDTO = BaseListDTO.inherit(TestDTO);
+  class TestDTO extends BaseDTO {
+    constructor(data) {
+      super(data, MAPPING);
+    }
+  }
+  class TestListDTO extends BaseListDTO {
+    constructor(data) {
+      super(data, TestDTO);
+    }
+  }
 
   it('#inherit inherits from parent classes', function() {
     expect(BaseListDTO.prototype).to.be.an.instanceof(BaseDTO);
