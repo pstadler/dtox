@@ -71,7 +71,6 @@ describe('BaseDTO', function() {
   });
 */
   it('throws if mapping is missing', function() {
-    console.log((new errors.MappingError()) instanceof errors.MappingError);
     expect(function() { new BaseDTO(); }).to.throw(errors.MappingError);
   });
 

@@ -23,7 +23,7 @@ describe('BaseListDTO', function() {
       super(data, TestDTO);
     }
   }
-
+  /*
   it('#inherit inherits from parent classes', function() {
     expect(BaseListDTO.prototype).to.be.an.instanceof(BaseDTO);
     expect(TestListDTO.prototype).to.be.an.instanceof(BaseListDTO);
@@ -37,11 +37,7 @@ describe('BaseListDTO', function() {
   it('#inherit throws if DTO class is missing', function() {
     expect(function() { new (BaseListDTO.inherit())(); }).to.throw(errors.InvalidArgumentError);
   });
-
-  it('throws if constructor is called without "new"', function() {
-    expect(function() { TestListDTO(); }).to.throw(errors.BaseError);
-  });
-
+*/
   it('handles data correctly', function() {
     var data = [
       { string: 'test' },
