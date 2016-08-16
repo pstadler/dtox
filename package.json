@@ -2,13 +2,13 @@
   "name": "dtox",
   "version": "0.3.0-alpha.1",
   "description": "Lightweight, extensible data transfer object library",
-  "main": "dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist/ && ./node_modules/.bin/babel --ignore 'node_modules**' . --out-dir dist/",
-    "prepublish": "npm run build",
+    "prepublish": "node prepublish.js && npm run build",
     "lint": "./node_modules/.bin/eslint .",
     "test": "npm run lint && ./node_modules/.bin/mocha --reporter spec --compilers js:babel-register",
-    "coverage": "./node_modules/.bin/babel-istanbul cover --report lcovonly ./node_modules/.bin/_mocha -- -R spec",
+    "coverage": "./node_modules/.bin/babel-istanbul cover --report lcovonly -x '**/dist/**' -x '**/examples/**' ./node_modules/.bin/_mocha -- -R spec",
     "sauce": "./node_modules/.bin/mochify --wd",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
