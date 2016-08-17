@@ -116,4 +116,20 @@ describe('BaseListDTO', function() {
       { string: 'test3', withDefault: 'default value', mappedValue: null }
     ]);
   });
+
+  it('is iterable', function() {
+    var data = [
+      { string: 'test' },
+      { string: 'test2' },
+      { string: 'test3' }
+    ];
+
+    var instance = new TestListDTO(data);
+
+    expect([...instance]).to.deep.equal([
+      { __RAW__: { string: 'test' }, string: 'test', withDefault: 'default value', mappedValue: null },
+      { __RAW__: { string: 'test2' }, string: 'test2', withDefault: 'default value', mappedValue: null },
+      { __RAW__: { string: 'test3' }, string: 'test3', withDefault: 'default value', mappedValue: null }
+    ]);
+  });
 });
