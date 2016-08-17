@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 const { BaseDTO, fields, errors } = require('../');
 
 describe('BaseDTO', function() {
-  var MAPPING = {
+  const MAPPING = {
     string: fields.string(),
     withDefault: fields.generic({ default: 'default value' }),
     mappedValue: fields.generic({ default: null, key: 'keyOfMappedValue' }),
@@ -38,22 +38,22 @@ describe('BaseDTO', function() {
   });
 
   it('takes valid data', function() {
-    var instance = new TestDTO({ string: 'foobar' });
+    const instance = new TestDTO({ string: 'foobar' });
     expect(instance.string).to.equal('foobar');
   });
 
   it('handles `null` values', function() {
-    var instance = new TestDTO({ string: null });
+    const instance = new TestDTO({ string: null });
     expect(instance.string).to.equal(null);
   });
 
   it('ignores superfluous data', function() {
-    var instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
+    const instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
     expect(instance).to.not.have.property('string2');
   });
 
   it('handles default values', function() {
-    var instance = new TestDTO({ string: 'foobar' });
+    let instance = new TestDTO({ string: 'foobar' });
     expect(instance.withDefault).to.equal('default value');
 
     instance = new TestDTO({ string: 'foobar', withDefault: 'not default' });
@@ -61,7 +61,7 @@ describe('BaseDTO', function() {
   });
 
   it('handles values with mapped keys', function() {
-    var instance = new TestDTO({ string: 'foobar', keyOfMappedValue: 'test' });
+    let instance = new TestDTO({ string: 'foobar', keyOfMappedValue: 'test' });
     expect(instance.mappedValue).to.equal('test');
 
     instance = new TestDTO({ string: 'foobar', mappedValue: 'test' });
@@ -77,22 +77,22 @@ describe('BaseDTO', function() {
   });
 
   it('stores raw data', function() {
-    var instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
+    const instance = new TestDTO({ string: 'foobar', string2: 'foobar' });
     expect(Object.keys(instance.__RAW__)).to.have.length(2);
   });
 
   it('uses callback for init', function() {
-    var instance = new TestDTO({ string: 'test', callbackValue: 'cbValue' });
+    const instance = new TestDTO({ string: 'test', callbackValue: 'cbValue' });
     expect(instance.callbackValue).to.equal('cbValuetest');
   });
 
   it('uses default value if callback returns undefined', function() {
-    var instance = new TestDTO({ string: 'test' });
+    const instance = new TestDTO({ string: 'test' });
     expect(instance.callbackValueUndefined).to.equal('foo');
   });
 
   it('serialises correctly to JSON', function() {
-    var instance = new TestDTO({string: 'foobar', callbackValue: 'cbValue'});
+    const instance = new TestDTO({string: 'foobar', callbackValue: 'cbValue'});
     expect(JSON.parse(JSON.stringify(instance))).to.deep.equal({
       string: 'foobar',
       withDefault: 'default value',

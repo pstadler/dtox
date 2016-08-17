@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 const { BaseDTO, BaseListDTO, fields, errors } = require('../');
 
 describe('BaseListDTO', function() {
-  var MAPPING = {
+  const MAPPING = {
     string: fields.string(),
     withDefault: fields.generic({ default: 'default value' }),
     mappedValue: fields.generic({ default: null, key: 'keyOfMappedValue' })
@@ -33,13 +33,13 @@ describe('BaseListDTO', function() {
   });
 
   it('handles data correctly', function() {
-    var data = [
+    const data = [
       { string: 'test' },
       { string: 'test2' },
       { string: 'test3' }
     ];
 
-    var instance = new TestListDTO(data);
+    const instance = new TestListDTO(data);
 
     expect(instance.items).to.have.length(3);
     expect(instance.items[0] instanceof TestDTO).to.be.true;
@@ -55,7 +55,7 @@ describe('BaseListDTO', function() {
   it('throws on invalid data', function() {
     expect(function() { new TestListDTO({ string: 'a' }); }).to.throw(errors.InvalidPropertyError);
 
-    var data = [
+    const data = [
       { string: 'test' },
       { notstring: 'test2' },
       { string: 'test3' }
@@ -65,7 +65,7 @@ describe('BaseListDTO', function() {
   });
 
   it('Array helpers exist', function() {
-    var instance = new TestListDTO([]);
+    const instance = new TestListDTO([]);
 
     expect(instance.concat).to.be.a('function');
     expect(instance.every).to.be.a('function');
@@ -83,17 +83,17 @@ describe('BaseListDTO', function() {
 
   // let's test a single Array helper at this point
   it('#map behaves like its native counterpart', function() {
-    var data = [
+    const data = [
       { string: 'test' },
       { string: 'test2' },
       { string: 'test3' }
     ];
 
-    var mapFn = function(v, k) {
+    const mapFn = function(v, k) {
       return k + ':' + v.string;
     };
 
-    var instance = new TestListDTO(data);
+    let instance = new TestListDTO(data);
     expect(instance.map(mapFn)).to.deep.equal(['0:test', '1:test2', '2:test3']);
     expect(instance.map(mapFn)).to.deep.equal(data.map(mapFn));
 
@@ -102,13 +102,13 @@ describe('BaseListDTO', function() {
   });
 
   it('serialises correctly to JSON', function() {
-    var data = [
+    const data = [
       { string: 'test' },
       { string: 'test2' },
       { string: 'test3' }
     ];
 
-    var instance = new TestListDTO(data);
+    const instance = new TestListDTO(data);
 
     expect(JSON.parse(JSON.stringify(instance))).to.deep.equal([
       { string: 'test', withDefault: 'default value', mappedValue: null },
@@ -118,18 +118,18 @@ describe('BaseListDTO', function() {
   });
 
   it('is iterable', function() {
-    var data = [
+    const data = [
       { string: 'test' },
       { string: 'test2' },
       { string: 'test3' }
     ];
 
-    var instance = new TestListDTO(data);
+    const instance = new TestListDTO(data);
 
-    expect([...instance]).to.deep.equal([
-      { __RAW__: { string: 'test' }, string: 'test', withDefault: 'default value', mappedValue: null },
-      { __RAW__: { string: 'test2' }, string: 'test2', withDefault: 'default value', mappedValue: null },
-      { __RAW__: { string: 'test3' }, string: 'test3', withDefault: 'default value', mappedValue: null }
-    ]);
+    const dtos = [...instance];
+
+    for(let dto of dtos) {
+      expect(dto).to.be.an.instanceOf(TestDTO);
+    }
   });
 });
