@@ -54,6 +54,6 @@
     "inherits": "^2.0.1"
   },
   "engines": {
-    "node": "6.x"
+    "node": ">= 4.x"
   }
 }
