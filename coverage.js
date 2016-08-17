@@ -5,7 +5,7 @@
 
 const fs = require('fs');
 const rimraf = require('rimraf');
-const { execSync } = require('child_process');
+const execSync = require('child_process').execSync;
 
 console.log('Executing coverage.js');
 
@@ -16,7 +16,7 @@ fs.writeFileSync('./package.json', JSON.stringify(packageJson, null, 2));
 
 console.log('* Updated package.json');
 
-rimraf('./dist', () => {
+rimraf('./dist', function() {
   console.log('* Removed ./dist folder');
 
   execSync('./node_modules/.bin/babel-istanbul cover --report lcovonly -x \'**/examples/**\'' +
