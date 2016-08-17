@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "NODE_ENV=production rimraf dist/ && ./node_modules/.bin/babel --ignore 'node_modules/**' . --out-dir dist/",
-    "prepublish": "node prepublish.js && npm run build",
+    "prepublish": "npm run build",
     "lint": "./node_modules/.bin/eslint .",
     "test": "npm run lint && ./node_modules/.bin/mocha --reporter spec --compilers js:babel-register",
-    "coverage": "./node_modules/.bin/babel-istanbul cover --report lcovonly -x '**/dist/**' -x '**/examples/**' ./node_modules/.bin/_mocha -- -R spec",
+    "coverage": "node coverage.js",
     "sauce": "./node_modules/.bin/mochify --wd",
     "coveralls": "npm run coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls"
   },
