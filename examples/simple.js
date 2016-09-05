@@ -1,10 +1,8 @@
 'use strict';
 
-// DTO definitions
-var dtox = require('..')
-  , fields = dtox.fields;
+const { BaseDTO, fields} = require('..');
 
-var USER_MAPPING = {
+const USER_MAPPING = {
   id:       fields.number(),
   name:     fields.string(),
   username: fields.string(),
@@ -15,14 +13,18 @@ var USER_MAPPING = {
   company:  fields.generic()
 };
 
-var UserDTO = dtox.BaseDTO.inherit(USER_MAPPING);
+class UserDTO extends BaseDTO {
+  constructor(data) {
+    super(data, USER_MAPPING);
+  }
+}
 
 // API call
-var request = require('request-promise');
+const request = require('request-promise');
 
 request('http://jsonplaceholder.typicode.com/users/1', { json: true })
   .then(function(res) {
-    var user = new UserDTO(res);
+    const user = new UserDTO(res);
     console.log(user.name);
   })
   .catch(function(err) {

@@ -2,8 +2,6 @@
 
 Lightweight, extensible data transfer object (DTO) library for Node.js and browser environments.
 
-Please note that this library is currently not running on Node.js >= 5.x due to compatibility issues with the new class inheritance model.
-
 ## Install
 
 ```bash
@@ -13,25 +11,28 @@ $ npm install dtox --save
 ## Usage
 
 ```js
-var dtox = require('dtox')
-  , fields = dtox.fields;
+const { BaseDTO, BaseListDTO, fields } = require('dtox')
 
 // Define user mapping
-var USER_MAPPING = {
+const USER_MAPPING = {
   id:          fields.number(),
   name:        fields.string(),
   validated:   fields.boolean({ default: false }),
   roles:       fields.list({ default: [], key: 'groups' }),
-  hasRoles:    fields.generic({ callback: function(data) {
+  hasRoles:    fields.generic({ callback: (data) => {
     return data.groups.length > 0;
   }}),
   dateCreated: fields.date()
 };
 
 // Define a DTO which represents a single user
-var UserDTO = dtox.BaseDTO.inherit(USER_MAPPING);
+class UserDTO extends BaseDTO {
+  constructor(data) {
+    super(data, USER_MAPPING);
+  }
+}
 
-var user = new UserDTO({
+const user = new UserDTO({
   id: 123,
   name: 'john_doe',
   validated: true,
@@ -43,9 +44,13 @@ console.log('Hello ' + user.name); // "Hello john_doe"
 console.log('User ' + user.hasRoles ? 'has roles' : 'has no roles'); // "User has roles"
 
 // Define a DTO which represents a list of users
-var UserListDTO = dtox.BaseListDTO.inherit(UserDTO);
+class UserListDTO extends BaseListDTO {
+  constructor(data) {
+    super(data, UserDTO);
+  }
+}
 
-var users = new UserListDTO([
+const users = new UserListDTO([
   {
     id: 123,
     name: 'john_doe',
@@ -62,9 +67,16 @@ var users = new UserListDTO([
   }
 ]);
 
-var userNames = users.map(function(user) {
+const userNames = users.map((user) => {
   return user.name;
 });
 
 console.log(userNames.join(', ')); // "john_doe, jane_doe"
+
+// or also possible:
+for (const userName of users) {
+  console.log(userName);
+}
+
+console.log(JSON.stringify(users)); // will print the items in JSON form
 ```

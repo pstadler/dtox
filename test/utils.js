@@ -1,7 +1,7 @@
 'use strict';
 
-var BaseDTO = require('../lib/dto').BaseDTO
-  , fields = require('../lib/fields');
+const BaseDTO = require('../lib/dto').BaseDTO;
+const fields = require('../lib/fields');
 
 var fieldTypes = Object.keys(fields);
 
@@ -23,7 +23,14 @@ function eachField(cb) {
     var field = fields[k];
 
     if(k.match(/WithDTO$/)) {
-      field = field.bind(null, BaseDTO.inherit({ fieldInMapping: fields.generic() }));
+      class fieldDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
+      field = field.bind(null, fieldDTO);
     }
 
     cb(field, k);

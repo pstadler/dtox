@@ -1,10 +1,9 @@
 'use strict';
 
-var dtox = require('..')
-  , fields = dtox.fields;
+const { BaseDTO, BaseListDTO, fields} = require('..');
 
 // Define user mapping
-var USER_MAPPING = {
+const USER_MAPPING = {
   id:          fields.number(),
   name:        fields.string(),
   roles:       fields.list({ default: [], key: 'groups' }),
@@ -13,9 +12,13 @@ var USER_MAPPING = {
 };
 
 // Define a DTO which represents a single user
-var UserDTO = dtox.BaseDTO.inherit(USER_MAPPING);
+class UserDTO extends BaseDTO {
+  constructor(data) {
+    super(data, USER_MAPPING);
+  }
+}
 
-var user = new UserDTO({
+const user = new UserDTO({
   id: 123,
   name: 'john_doe',
   groups: ['administrator'],
@@ -26,9 +29,13 @@ var user = new UserDTO({
 console.log('Hello ' + user.name); // "Hello john_doe"
 
 // Define a DTO which represents a list of users
-var UserListDTO = dtox.BaseListDTO.inherit(UserDTO);
+class UserListDTO extends BaseListDTO {
+  constructor(data) {
+    super(data, UserDTO);
+  }
+}
 
-var users = new UserListDTO([
+const users = new UserListDTO([
   {
     id: 123,
     name: 'john_doe',
@@ -45,8 +52,15 @@ var users = new UserListDTO([
   }
 ]);
 
-var userNames = users.map(function(u) {
+const userNames = users.map(function(u) {
   return u.name;
 });
 
 console.log(userNames.join(', ')); // "john_doe, jane_doe"
+
+// or also possible:
+for (const userName of users) {
+  console.log(userName);
+}
+
+console.log(JSON.stringify(users)); // will print the items in JSON form

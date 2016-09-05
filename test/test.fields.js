@@ -2,12 +2,10 @@
 
 /*eslint-disable no-unused-expressions, no-new */
 
-var expect = require('chai').expect;
+const expect = require('chai').expect;
 
-var BaseDTO = require('../lib/dto').BaseDTO
-  , fields = require('../lib/fields')
-  , errors = require('../lib/errors')
-  , utils = require('./utils');
+const { BaseDTO, fields, errors } = require('../');
+const utils = require('./utils');
 
 describe('fields', function() {
   it('contain correct properties', function() {
@@ -19,8 +17,8 @@ describe('fields', function() {
 
   it('correctly handle values', function() {
     utils.eachField(function(field, type) {
-      var testVal = utils.valueForType(type);
-      var resultVal = field().fn(testVal);
+      const testVal = utils.valueForType(type);
+      let resultVal = field().fn(testVal);
 
       if(type === 'listWithDTO') {
         resultVal = [{ fieldInMapping: resultVal[0].fieldInMapping }];
@@ -35,7 +33,7 @@ describe('fields', function() {
 
   it('correctly stores default values', function() {
     utils.eachField(function(field, type) {
-      var defaultVal = utils.valueForType(type);
+      const defaultVal = utils.valueForType(type);
 
       expect(field({ default: defaultVal }).options.default).to.not.be.null;
       expect(field({ default: defaultVal }).options.default).to.deep.equal(defaultVal);
@@ -57,7 +55,7 @@ describe('fields', function() {
   describe('#generic', function() {
     it('takes values of any kind', function() {
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
         expect(fields.generic().fn(testVal)).to.deep.equal(testVal);
       });
     });
@@ -66,7 +64,7 @@ describe('fields', function() {
   describe('#string', function() {
     it('takes only values of type string', function() {
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['string', 'generic'].indexOf(type) !== -1) {
           expect(fields.string().fn(testVal)).to.be.a('string');
@@ -81,7 +79,7 @@ describe('fields', function() {
   describe('#boolean', function() {
     it('takes only values of type boolean', function() {
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['boolean'].indexOf(type) !== -1) {
           expect(fields.boolean().fn(testVal)).to.be.a('boolean');
@@ -96,7 +94,7 @@ describe('fields', function() {
   describe('#number', function() {
     it('takes only values of type number', function() {
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['number'].indexOf(type) !== -1) {
           expect(fields.number().fn(testVal)).to.be.a('number');
@@ -111,7 +109,7 @@ describe('fields', function() {
   describe('#date', function() {
     it('takes only values of type date', function() {
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['date', 'number'].indexOf(type) !== -1) {
           expect(fields.date().fn(testVal)).to.be.an.instanceof(Date);
@@ -125,10 +123,10 @@ describe('fields', function() {
 
   describe('#list', function() {
     it('takes only values of type list', function() {
-      var field = fields.list();
+      const field = fields.list();
 
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
           expect(field.fn(testVal)).to.be.an.instanceof(Array);
@@ -142,10 +140,17 @@ describe('fields', function() {
 
   describe('#listWithDTO', function() {
     it('takes only values of type list', function() {
-      var field = fields.listWithDTO(BaseDTO.inherit({ fieldInMapping: fields.generic() }));
+      class fieldDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
+      const field = fields.listWithDTO(fieldDTO);
 
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['list', 'listWithDTO'].indexOf(type) !== -1) {
           expect(field.fn(testVal)).to.be.an.instanceof(Array);
@@ -163,11 +168,17 @@ describe('fields', function() {
 
   describe('#objectWithDTO', function() {
     it('takes only valid objects', function() {
-      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
-      var field = fields.objectWithDTO(TestDTO);
+      class TestDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
+      const field = fields.objectWithDTO(TestDTO);
 
       utils.fieldTypes.forEach(function(type) {
-        var testVal = utils.valueForType(type);
+        const testVal = utils.valueForType(type);
 
         if(['objectWithDTO'].indexOf(type) !== -1) {
           expect(field.fn(testVal)).to.be.an.instanceof(TestDTO);
@@ -183,8 +194,14 @@ describe('fields', function() {
     });
 
     it('correctly handles missing data when default is `null`', function() {
-      var TestDTO = BaseDTO.inherit({ fieldInMapping: fields.generic() });
-      var field = fields.objectWithDTO(TestDTO, { default: null });
+      class TestDTO extends BaseDTO {
+        constructor(data) {
+          super(data, {
+            fieldInMapping: fields.generic()
+          });
+        }
+      }
+      const field = fields.objectWithDTO(TestDTO, { default: null });
       expect(field.fn()).to.be.null;
     });
   });
