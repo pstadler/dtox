@@ -1,6 +1,6 @@
 {
   "name": "dtox",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Lightweight, extensible data transfer object library",
   "main": "dist/index.js",
   "scripts": {
