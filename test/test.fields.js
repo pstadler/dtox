@@ -4,7 +4,7 @@
 
 const expect = require('chai').expect;
 
-const { BaseDTO, fields, errors } = require('../');
+const { BaseDTO, fields, errors } = require('../index');
 const utils = require('./utils');
 
 describe('fields', function() {
