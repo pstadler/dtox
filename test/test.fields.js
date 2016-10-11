@@ -11,7 +11,6 @@ describe('fields', function() {
   it('contain correct properties', function() {
     utils.eachField(function(field) {
       expect(field().fn).to.be.a('function');
-      expect(field().options).to.deep.equal({});
     });
   });
 
@@ -111,12 +110,16 @@ describe('fields', function() {
       utils.fieldTypes.forEach(function(type) {
         const testVal = utils.valueForType(type);
 
-        if(['date', 'number'].indexOf(type) !== -1) {
+        if(['date'].indexOf(type) !== -1) {
           expect(fields.date().fn(testVal)).to.be.an.instanceof(Date);
           return;
         }
 
-        expect(function() { fields.date().fn(testVal); }).to.throw(errors.InvalidPropertyError);
+        expect(function() {
+          fields.date().fn(testVal);
+        }).to.throw(errors.InvalidPropertyError,
+          `InvalidPropertyError: Property '${testVal}' cannot be converted to a date`,
+          `Property '${testVal}' should have thrown an error when converting to a date.`);
       });
     });
   });

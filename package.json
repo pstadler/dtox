@@ -51,7 +51,8 @@
   },
   "dependencies": {
     "babel-runtime": "^6.11.6",
-    "inherits": "^2.0.1"
+    "inherits": "^2.0.1",
+    "moment": "^2.15.1"
   },
   "engines": {
     "node": ">= 4.x"

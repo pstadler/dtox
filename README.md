@@ -22,7 +22,8 @@ const USER_MAPPING = {
   hasRoles:    fields.generic({ callback: (data) => {
     return data.groups.length > 0;
   }}),
-  dateCreated: fields.date()
+  // format can be any moment.js-compatible format. When not specified, ISO-8601 format is the default.
+  dateCreated: fields.date({ format: 'YYYY-MM-DD' })
 };
 
 // Define a DTO which represents a single user
@@ -37,7 +38,7 @@ const user = new UserDTO({
   name: 'john_doe',
   validated: true,
   groups: ['administrator'],
-  dateCreated: '1997-07-16T19:20:30Z'
+  dateCreated: '1997-07-16'
 });
 
 console.log('Hello ' + user.name); // "Hello john_doe"
@@ -56,14 +57,14 @@ const users = new UserListDTO([
     name: 'john_doe',
     groups: ['owner'],
     validated: true,
-    dateCreated: '1997-07-16T19:20:30Z'
+    dateCreated: '1997-07-16'
   },
   {
     id: 124,
     name: 'jane_doe',
     groups: ['administrator'],
     validated: false,
-    dateCreated: '2015-12-15T07:36:25Z'
+    dateCreated: '2015-12-15'
   }
 ]);
 
