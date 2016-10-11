@@ -2,3 +2,11 @@ examples/
 test/
 prepublish.js
 coverage/
+.babelrc
+.eslintignore
+.eslintrc
+.gitignore
+.min-wd
+.nvmrc
+.travis.yml
+coverage.js
