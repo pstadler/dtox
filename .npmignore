@@ -1,4 +1,11 @@
 examples/
 test/
-prepublish.js
 coverage/
+.nyc_output/
+package-lock.json
+.nvmrc
+.min-wd
+.eslintignore
+.gitignore
+.babelrc
+.travis.yml

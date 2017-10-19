@@ -2,4 +2,6 @@
 ._*
 node_modules/
 coverage/
-dist/
+lib/
+.nyc_output/
+package-lock.json

@@ -2,11 +2,11 @@
  * DTO Fields
  *
  * @author Patrick Stadler <patrick.stadler@gmail.com>
+ * @author Michael Weibel <michael.weibel@gmail.com>
  */
-'use strict';
 
-var BaseDTO = require('./dto').BaseDTO
-  , errors = require('./errors');
+const { BaseDTO } = require('./dto')
+const errors = require('./errors')
 
 /**
  * Field mapping options
@@ -29,17 +29,17 @@ var BaseDTO = require('./dto').BaseDTO
  *
  * @throws InvalidPropertyError if property is empty
  */
-function generic(options) {
+function generic (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val === undefined) {
-        throw new errors.InvalidPropertyError('Required property is missing');
+    fn: function (val) {
+      if (val === undefined) {
+        throw new errors.InvalidPropertyError('Required property is missing')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -52,17 +52,17 @@ function generic(options) {
  *
  * @throws InvalidPropertyError if property has wrong type
  */
-function string(options) {
+function string (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val !== null && typeof val !== 'string') {
-        throw new errors.InvalidPropertyError('Property of type string required');
+    fn: function (val) {
+      if (val !== null && typeof val !== 'string') {
+        throw new errors.InvalidPropertyError('Property of type string required')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -75,17 +75,17 @@ function string(options) {
  *
  * @throws InvalidPropertyError if property has wrong type
  */
-function boolean(options) {
+function boolean (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val !== null && typeof val !== 'boolean') {
-        throw new errors.InvalidPropertyError('Property of type boolean required');
+    fn: function (val) {
+      if (val !== null && typeof val !== 'boolean') {
+        throw new errors.InvalidPropertyError('Property of type boolean required')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -98,17 +98,17 @@ function boolean(options) {
  *
  * @throws InvalidPropertyError if property has wrong type
  */
-function number(options) {
+function number (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val !== null && typeof val !== 'number') {
-        throw new errors.InvalidPropertyError('Property of type number required');
+    fn: function (val) {
+      if (val !== null && typeof val !== 'number') {
+        throw new errors.InvalidPropertyError('Property of type number required')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -121,36 +121,36 @@ function number(options) {
  *
  * @throws InvalidPropertyError if property is empty or not parsable to a date
  */
-function date(options) {
+function date (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val === null) {
-        return val;
+    fn: function (val) {
+      if (val === null) {
+        return val
       }
 
-      if(val === undefined) {
-        throw new errors.InvalidPropertyError('Required property is missing');
+      if (val === undefined) {
+        throw new errors.InvalidPropertyError('Required property is missing')
       }
 
       // booleans can be parsed to dates
-      if(typeof val === 'boolean') {
-        throw new errors.InvalidPropertyError('Property cannot be converted to a date');
+      if (typeof val === 'boolean') {
+        throw new errors.InvalidPropertyError('Property cannot be converted to a date')
       }
 
-      if(val instanceof Date) {
-        return val;
+      if (val instanceof Date) {
+        return val
       }
 
-      val = new Date(val);
+      val = new Date(val)
 
-      if(val.toString() === 'Invalid Date') {
-        throw new errors.InvalidPropertyError('Property cannot be converted to a date');
+      if (val.toString() === 'Invalid Date') {
+        throw new errors.InvalidPropertyError('Property cannot be converted to a date')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -163,17 +163,17 @@ function date(options) {
  *
  * @throws InvalidPropertyError if property has wrong type
  */
-function list(options) {
+function list (options) {
   return {
     options: options || {},
-    fn: function(val) {
-      if(val !== null && !Array.isArray(val)) {
-        throw new errors.InvalidPropertyError('Property of type array required');
+    fn: function (val) {
+      if (val !== null && !Array.isArray(val)) {
+        throw new errors.InvalidPropertyError('Property of type array required')
       }
 
-      return val;
+      return val
     }
-  };
+  }
 }
 
 /**
@@ -186,29 +186,29 @@ function list(options) {
  * @throws InvalidArgumentError if DTOClass is not inheriting from BaseDTO
  * @throws InvalidPropertyError if property has wrong type
  */
-function listWithDTO(DTOClass, options) {
-  if(!(DTOClass && DTOClass.prototype instanceof BaseDTO)) {
-    throw new errors.InvalidArgumentError('Valid DTO class required');
+function listWithDTO (DTOClass, options) {
+  if (!(DTOClass && DTOClass.prototype instanceof BaseDTO)) {
+    throw new errors.InvalidArgumentError('Valid DTO class required')
   }
 
-  options = options || {};
+  options = options || {}
 
   return {
     options: options,
-    fn: function applylistWithDTO(val) {
-      if(val === null) {
-        return val;
+    fn: function applylistWithDTO (val) {
+      if (val === null) {
+        return val
       }
 
-      if(!Array.isArray(val)) {
-        throw new errors.InvalidPropertyError('Property of type array required');
+      if (!Array.isArray(val)) {
+        throw new errors.InvalidPropertyError('Property of type array required')
       }
 
-      return val.map(function(item) {
-        return new DTOClass(item);
-      });
+      return val.map(function (item) {
+        return new DTOClass(item)
+      })
     }
-  };
+  }
 }
 
 /**
@@ -220,32 +220,32 @@ function listWithDTO(DTOClass, options) {
  * @throws InvalidArgumentError if DTOClass is not inheriting from BaseDTO
  * @throws InvalidPropertyError if property has wrong type
  */
-function objectWithDTO(DTOClass, options) {
-  if(!(DTOClass && DTOClass.prototype instanceof BaseDTO)) {
-    throw new errors.InvalidArgumentError('Valid DTO class required');
+function objectWithDTO (DTOClass, options) {
+  if (!(DTOClass && DTOClass.prototype instanceof BaseDTO)) {
+    throw new errors.InvalidArgumentError('Valid DTO class required')
   }
 
-  options = options || {};
+  options = options || {}
 
   return {
     options: options,
-    fn: function applyObjectWithDTO(val) {
-      if(val === null) {
-        return val;
+    fn: function applyObjectWithDTO (val) {
+      if (val === null) {
+        return val
       }
 
       // this should be treated as an optional field if options.default is set to null
-      if(!val && options.default === null) {
-        return options.default;
+      if (!val && options.default === null) {
+        return options.default
       }
 
-      if(!val && !options.default) {
-        throw new errors.InvalidPropertyError('Required property is missing');
+      if (!val && !options.default) {
+        throw new errors.InvalidPropertyError('Required property is missing')
       }
 
-      return new DTOClass(val || options.default);
+      return new DTOClass(val || options.default)
     }
-  };
+  }
 }
 
 module.exports = {
@@ -257,4 +257,4 @@ module.exports = {
   list: list,
   listWithDTO: listWithDTO,
   objectWithDTO: objectWithDTO
-};
+}

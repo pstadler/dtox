@@ -1,4 +1,16 @@
 {
-  "presets": ["es2015"],
-  "plugins": ["transform-runtime"]
+  "presets": [
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions"],
+        "node": "6"
+      },
+      "useBuiltIns": "usage"
+    }]
+  ],
+  "env": {
+    "test": {
+      "plugins": [ "istanbul" ]
+    }
+  }
 }

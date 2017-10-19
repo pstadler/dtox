@@ -1,11 +1,9 @@
-'use strict';
+const BaseDTO = require('../src/dto').BaseDTO
+const fields = require('../src/fields')
 
-const BaseDTO = require('../lib/dto').BaseDTO;
-const fields = require('../lib/fields');
+const fieldTypes = Object.keys(fields)
 
-var fieldTypes = Object.keys(fields);
-
-function valueForType(type) {
+function valueForType (type) {
   return {
     generic: 'something',
     string: 'string',
@@ -15,30 +13,30 @@ function valueForType(type) {
     list: [],
     listWithDTO: [{ fieldInMapping: 'thing' }],
     objectWithDTO: { fieldInMapping: 'thing' }
-  }[type];
+  }[type]
 }
 
-function eachField(cb) {
-  fieldTypes.forEach(function(k) {
-    var field = fields[k];
+function eachField (cb) {
+  fieldTypes.forEach(function (k) {
+    let field = fields[k]
 
-    if(k.match(/WithDTO$/)) {
+    if (k.match(/WithDTO$/)) {
       class fieldDTO extends BaseDTO {
-        constructor(data) {
+        constructor (data) {
           super(data, {
             fieldInMapping: fields.generic()
-          });
+          })
         }
       }
-      field = field.bind(null, fieldDTO);
+      field = field.bind(null, fieldDTO)
     }
 
-    cb(field, k);
-  });
+    cb(field, k)
+  })
 }
 
 module.exports = {
-  fieldTypes: fieldTypes,
-  valueForType: valueForType,
-  eachField: eachField
-};
+  fieldTypes,
+  valueForType,
+  eachField
+}
