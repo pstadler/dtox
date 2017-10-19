@@ -5,14 +5,26 @@
  * @author Michael Weibel <michael.weibel@gmail.com>
  */
 
+const inherits = require('inherits')
+
 /**
  * Base error
  *
- * Uses babel-plugin-transform-builtin-extend to support extending builtin type Error
+ * Still in ES5 style because of http://stackoverflow.com/q/33870684/315242
+ * (instanceof with babel transpiling doesn't work on native classes)
  *
  * @param {string} msg error message
  */
-class BaseError extends Error {}
+function BaseError (msg) {
+  BaseError.super_.call(this, msg)
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, this.constructor)
+  }
+  this.message = msg
+  this.name = this.constructor.name
+}
+
+inherits(BaseError, Error)
 
 /**
  * Mapping error

@@ -4,12 +4,8 @@
       "targets": {
         "browsers": ["last 2 versions"],
         "node": "6"
-      }
-    }]
-  ],
-  "plugins": [
-    ["babel-plugin-transform-builtin-extend", {
-      "globals": ["Error"]
+      },
+      "useBuiltIns": "usage"
     }]
   ],
   "env": {
